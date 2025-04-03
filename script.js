@@ -2,7 +2,7 @@
 
 // Select elements
 const startButton = document.querySelector(".start-button");
-const firstPlayerTotalScore = document.querySelector(
+const firstPlayerTotalScoreSpan = document.querySelector(
   ".first-player-total-score"
 );
 const firstPlayerCurrentScore = document.querySelector(

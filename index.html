@@ -7,16 +7,23 @@
     <title>Risky Pig</title>
   </head>
   <body>
-    <h1 class="game-title">Risky Pig</h1>
-    <button class="start-button">NEW GAME</button>
-    <h3 class="player-name">PLAYER 1</h3>
-    <p class="first-player-total-score">Total score: X</p>
-    <p class="first-player-current-score">Current score: X</p>
-    <h3 class="player-name">PLAYER 2</h3>
-    <p class="second-player-total-score">Total score: X</p>
-    <p class="second-player-total-score">Current score: X</p>
-    <button class="dice-button">ROLL</button>
-    <button class="hold-button">HOLD</button>
+    <div class="container">
+      <h1 class="game-title">Risky Pig</h1>
+      <button class="start-button">NEW GAME</button>
+      <section class="first-player-container">
+        <h3 class="player-name">PLAYER 1</h3>
+        <p class="first-player-total-score">Total score: X</p>
+        <p class="first-player-current-score">Current score: X</p>
+      </section>
+      <section class="second-player-container">
+        <h3 class="player-name">PLAYER 2</h3>
+        <p class="second-player-total-score">Total score: X</p>
+        <p class="second-player-total-score">Current score: X</p>
+      </section>
+      <button class="dice-button">ROLL</button>
+      <button class="hold-button">HOLD</button>
+      <p class="dice">Dice: <span class="dice-result">X</span></p>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

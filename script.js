@@ -1,34 +1,40 @@
 "use Strict";
 
-// Select elements
+// Select html elements and assign them to variables
 const startButton = document.querySelector(".start-button");
 const firstPlayerTotalScoreSpan = document.querySelector(
   ".first-player-total-score"
 );
-const firstPlayerCurrentScore = document.querySelector(
+const firstPlayerCurrentScoreSpan = document.querySelector(
   ".first-player-current-score"
 );
-const secondPlayerTotalScore = document.querySelector(
+const secondPlayerTotalScoreSpan = document.querySelector(
   ".second-player-total-score"
 );
-const secondPlayerCurrentScore = document.querySelector(
+const secondPlayerCurrentScoreSpan = document.querySelector(
   ".second-player-current-score"
 );
 const diceButton = document.querySelector(".dice-button");
 const holdButton = document.querySelector(".hold-button");
 const diceResultSpan = document.querySelector(".dice-result");
 
-// Declare constant for dice roll
+// Declare variables to store dice values
 let currentDice;
+let firstPlayerCurrentScore;
+let secondPlayerCurrentScore;
+let firstPlayerTotalScore;
+let secondPlayerTotalScore;
 
-// Define functions
+////////// Define functions /////////
 
 // Reset game
 const resetGame = () => {
-  // Set current dice to 0
-  currentDice = 0;
-  // Display dice result as 0
-  displayText(diceResultSpan, currentDice);
+  if (currentDice) {
+    // Set current dice to null
+    currentDice = null;
+    // Display an empty string in the place of dice
+    displayText(diceResultSpan, currentDice);
+  }
 };
 
 // Roll dice to start the game
@@ -40,10 +46,12 @@ const rollDice = () => {
   displayText(diceResultSpan, currentDice);
 };
 
-//Display text content of an element
+// Display text content of an element
 const displayText = (element, content) => {
   element.textContent = content;
 };
+
+////////// Add event listeners /////////////
 
 // Add event listener to diceButton for dice rolling
 diceButton.addEventListener("click", rollDice);

@@ -22,11 +22,18 @@ const holdButton = document.querySelector(".hold-button");
 const diceResultSpan = document.querySelector(".dice-result");
 
 // Declare variables to store dice values
-let currentDice;
-let firstPlayerCurrentScore;
-let secondPlayerCurrentScore;
-let firstPlayerTotalScore;
-let secondPlayerTotalScore;
+let currentDice = 0;
+let firstPlayerCurrentScore = 0;
+let secondPlayerCurrentScore = 0;
+let firstPlayerTotalScore = 0;
+let secondPlayerTotalScore = 0;
+
+const scores = {
+  firstPlayerCurrentScore: 0,
+  secondPlayerCurrentScore: 0,
+  firstPlayerTotalScore: 0,
+  secondPlayerCurrentScore: 0,
+};
 
 ////////// Define functions /////////
 
@@ -51,10 +58,21 @@ const resetGame = () => {
 const rollDice = () => {
   // Assign a random number between 1 - 6 to currentDice
   currentDice = Math.ceil(Math.random() * 6);
-  // Set current dice to firstPlayerCurrentScore
-  firstPlayerCurrentScore = currentDice;
-  if (currentDice == 1) {
-    changeTurn();
+  // Assing the dice value to the current player based on "playing" class
+  if (firstPlayerSection.classList.contains("playing")) {
+    // if first player is playing
+    firstPlayerCurrentScore += currentDice;
+    if (currentDice == 1) {
+      firstPlayerCurrentScore = 0;
+      changeTurn();
+    }
+  } else {
+    // if second player is playing
+    secondPlayerCurrentScore += currentDice;
+    if (currentDice == 1) {
+      secondPlayerCurrentScore = 0;
+      changeTurn();
+    }
   }
 
   console.log("current dice: ", currentDice);

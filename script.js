@@ -28,13 +28,6 @@ let secondPlayerCurrentScore = 0;
 let firstPlayerTotalScore = 0;
 let secondPlayerTotalScore = 0;
 
-const scores = {
-  firstPlayerCurrentScore: 0,
-  secondPlayerCurrentScore: 0,
-  firstPlayerTotalScore: 0,
-  secondPlayerCurrentScore: 0,
-};
-
 ////////// Define functions /////////
 
 // Reset game
@@ -108,9 +101,29 @@ const resetTurn = () => {
   }
 };
 
+// Add current score to total score according to playing player
+const holdScore = () => {
+  // If first player is playing
+  if (firstPlayerSection.classList.contains("playing")) {
+    firstPlayerTotalScore += firstPlayerCurrentScore;
+    firstPlayerCurrentScore = 0;
+    displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
+    displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
+    changeTurn();
+  } else {
+    secondPlayerTotalScore += secondPlayerCurrentScore;
+    secondPlayerCurrentScore = 0;
+    displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
+    displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
+    changeTurn();
+  }
+};
+
 ////////// Add event listeners /////////////
 
 // Add event listener to diceButton for dice rolling
 diceButton.addEventListener("click", rollDice);
 // Add event listener to new game button for resetting dice and scores
 startButton.addEventListener("click", resetGame);
+// Add event listener to hold button to add current scores to playing player when clicked "hold"
+holdButton.addEventListener("click", holdScore);

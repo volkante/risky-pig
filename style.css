@@ -7,3 +7,7 @@
 .playing {
   background-color: bisque;
 }
+
+.hidden {
+  display: none;
+}

@@ -17,11 +17,13 @@ const secondPlayerTotalScoreSpan = document.querySelector(
 const secondPlayerCurrentScoreSpan = document.querySelector(
   ".second-player-current-score span"
 );
-const diceButton = document.querySelector(".dice-button");
+const rollButton = document.querySelector(".roll-button");
 const holdButton = document.querySelector(".hold-button");
 const diceResultSpan = document.querySelector(".dice-result");
+const winnerTextParagraph = document.querySelector(".winner-text");
+const winnerTextSpan = document.querySelector(".winner-text span");
 
-// Declare variables to store dice values
+// Initialize variables to store dice values
 let currentDice = 0;
 let firstPlayerCurrentScore = 0;
 let secondPlayerCurrentScore = 0;
@@ -32,6 +34,13 @@ let secondPlayerTotalScore = 0;
 
 // Reset game
 const resetGame = () => {
+  //if winner text is not hidden, hide it and enable buttons!.
+  if (!winnerTextParagraph.classList.contains("hidden")) {
+    winnerTextParagraph.classList.add("hidden");
+    enableElement(rollButton);
+    enableElement(holdButton);
+  }
+  // If the dice is rolled do the following
   if (currentDice) {
     resetTurn();
     currentDice = 0;
@@ -67,9 +76,7 @@ const rollDice = () => {
       changeTurn();
     }
   }
-
-  console.log("current dice: ", currentDice);
-  // Display current dice result
+  // Display current dice result and scores
   displayText(diceResultSpan, currentDice);
   displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
   displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
@@ -101,6 +108,15 @@ const resetTurn = () => {
   }
 };
 
+// Disable element if needed
+const disableElement = (element) => {
+  element.disabled = true;
+};
+
+const enableElement = (element) => {
+  element.disabled = false;
+};
+
 // Add current score to total score according to playing player
 const holdScore = () => {
   // If first player is playing
@@ -109,20 +125,41 @@ const holdScore = () => {
     firstPlayerCurrentScore = 0;
     displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
     displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
+    // finish game and display winner if totalscore is bigger than 20
+    finishGame(firstPlayerTotalScore);
     changeTurn();
   } else {
+    // If second player is playing
     secondPlayerTotalScore += secondPlayerCurrentScore;
     secondPlayerCurrentScore = 0;
     displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
     displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
+    // finish game and display winner if totalscore is bigger than 20
+    finishGame(secondPlayerTotalScore);
     changeTurn();
+  }
+};
+
+const finishGame = (totalScore) => {
+  if (totalScore >= 10) {
+    disableElement(rollButton);
+    disableElement(holdButton);
+    // if the winner is firstplayer
+    if (totalScore == firstPlayerTotalScore) {
+      displayText(winnerTextSpan, "PLAYER 1");
+      winnerTextParagraph.classList.remove("hidden");
+    } else {
+      // if the winner is secondplayer
+      displayText(winnerTextSpan, "PLAYER 2");
+      winnerTextParagraph.classList.remove("hidden");
+    }
   }
 };
 
 ////////// Add event listeners /////////////
 
-// Add event listener to diceButton for dice rolling
-diceButton.addEventListener("click", rollDice);
+// Add event listener to rollButton for dice rolling
+rollButton.addEventListener("click", rollDice);
 // Add event listener to new game button for resetting dice and scores
 startButton.addEventListener("click", resetGame);
 // Add event listener to hold button to add current scores to playing player when clicked "hold"

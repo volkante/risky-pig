@@ -92,6 +92,15 @@ const updateCurrentScores = () => {
   }
 };
 
+// Reset all scores
+const resetScores = () => {
+  currentDice = 0;
+  firstPlayerCurrentScore = 0;
+  secondPlayerCurrentScore = 0;
+  firstPlayerTotalScore = 0;
+  secondPlayerTotalScore = 0;
+};
+
 // Reset game
 const resetGame = () => {
   // If winner text is not hidden because of an already finished game, hide it and enable buttons
@@ -100,19 +109,15 @@ const resetGame = () => {
     enableElement(rollButton);
     enableElement(holdButton);
   }
-  // If the dice is rolled, do the following
+  // If the dice is rolled(if the game has been played), reset scores to 0 and display it and reset turn.
   if (currentDice) {
-    resetTurn();
-    currentDice = 0;
-    firstPlayerCurrentScore = 0;
-    secondPlayerCurrentScore = 0;
-    firstPlayerTotalScore = 0;
-    secondPlayerTotalScore = 0;
+    resetScores();
     displayText(diceResultSpan, currentDice);
     displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
     displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
     displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
     displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
+    resetTurn();
   }
 };
 

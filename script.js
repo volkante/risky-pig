@@ -32,15 +32,75 @@ let secondPlayerTotalScore = 0;
 
 ////////// Define functions /////////
 
+// Display text content of an element
+const displayText = (element, content) => {
+  element.textContent = content;
+};
+
+// Disable element
+const disableElement = (element) => {
+  element.disabled = true;
+};
+
+// Enable element
+const enableElement = (element) => {
+  element.disabled = false;
+};
+
+// Generate a random number between 1 and 6
+const generateRandomNumber = () => {
+  return Math.ceil(Math.random() * 6);
+};
+
+// Reset turn by giving turn to first player
+const resetTurn = () => {
+  if (secondPlayerSection.classList.contains("playing")) {
+    secondPlayerSection.classList.remove("playing");
+    firstPlayerSection.classList.add("playing");
+  }
+};
+
+// Change turn by adding or removing "playing" class
+const changeTurn = () => {
+  if (firstPlayerSection.classList.contains("playing")) {
+    firstPlayerSection.classList.remove("playing");
+    secondPlayerSection.classList.add("playing");
+  } else {
+    secondPlayerSection.classList.remove("playing");
+    firstPlayerSection.classList.add("playing");
+  }
+};
+
+// Add current dice value to currently playing player's current score unless dice is 1
+const updateCurrentScores = () => {
+  if (firstPlayerSection.classList.contains("playing")) {
+    // If first player is playing
+    firstPlayerCurrentScore += currentDice;
+    // Update current Score of first player if the current dice is 1 and change turn.
+    if (currentDice == 1) {
+      firstPlayerCurrentScore = 0;
+      changeTurn();
+    }
+  } else {
+    // If second player is playing
+    secondPlayerCurrentScore += currentDice;
+    // Update current Score of second player if the current dice is 1 and change turn.
+    if (currentDice == 1) {
+      secondPlayerCurrentScore = 0;
+      changeTurn();
+    }
+  }
+};
+
 // Reset game
 const resetGame = () => {
-  //if winner text is not hidden, hide it and enable buttons!.
+  // If winner text is not hidden because of an already finished game, hide it and enable buttons
   if (!winnerTextParagraph.classList.contains("hidden")) {
     winnerTextParagraph.classList.add("hidden");
     enableElement(rollButton);
     enableElement(holdButton);
   }
-  // If the dice is rolled do the following
+  // If the dice is rolled, do the following
   if (currentDice) {
     resetTurn();
     currentDice = 0;
@@ -59,62 +119,15 @@ const resetGame = () => {
 // Roll dice to start the game
 const rollDice = () => {
   // Assign a random number between 1 - 6 to currentDice
-  currentDice = Math.ceil(Math.random() * 6);
-  // Assing the dice value to the current player based on "playing" class
-  if (firstPlayerSection.classList.contains("playing")) {
-    // if first player is playing
-    firstPlayerCurrentScore += currentDice;
-    if (currentDice == 1) {
-      firstPlayerCurrentScore = 0;
-      changeTurn();
-    }
-  } else {
-    // if second player is playing
-    secondPlayerCurrentScore += currentDice;
-    if (currentDice == 1) {
-      secondPlayerCurrentScore = 0;
-      changeTurn();
-    }
-  }
+  currentDice = generateRandomNumber();
+  // Update scores according to the player's turn and change turn when dice gets 1
+  updateCurrentScores();
   // Display current dice result and scores
   displayText(diceResultSpan, currentDice);
   displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
   displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
   displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
   displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
-};
-
-// Display text content of an element
-const displayText = (element, content) => {
-  element.textContent = content;
-};
-
-// Change turn by adding or removing "playing" class
-const changeTurn = () => {
-  if (firstPlayerSection.classList.contains("playing")) {
-    firstPlayerSection.classList.remove("playing");
-    secondPlayerSection.classList.add("playing");
-  } else {
-    secondPlayerSection.classList.remove("playing");
-    firstPlayerSection.classList.add("playing");
-  }
-};
-
-// Reset turn by making player 1 playing
-const resetTurn = () => {
-  if (secondPlayerSection.classList.contains("playing")) {
-    secondPlayerSection.classList.remove("playing");
-    firstPlayerSection.classList.add("playing");
-  }
-};
-
-// Disable element if needed
-const disableElement = (element) => {
-  element.disabled = true;
-};
-
-const enableElement = (element) => {
-  element.disabled = false;
 };
 
 // Add current score to total score according to playing player

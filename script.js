@@ -13,7 +13,6 @@ const firstPlayerCurrentScoreSpan = document.querySelector(
 const secondPlayerTotalScoreSpan = document.querySelector(
   ".second-player-total-score span"
 );
-
 const secondPlayerCurrentScoreSpan = document.querySelector(
   ".second-player-current-score span"
 );
@@ -130,9 +129,7 @@ const rollDice = () => {
   // Display current dice result and scores
   displayText(diceResultSpan, currentDice);
   displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
-  displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
   displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
-  displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
 };
 
 // Add current score to total score according to playing player

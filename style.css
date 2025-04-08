@@ -28,20 +28,19 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
+  background-color: #f4f4f4; /* Açık gri */
+  color: #333; /* Koyu gri */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
 }
 
 .container {
   text-align: center;
-  background-color: #fff;
+  background-color: #fff; /* Beyaz */
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge */
   padding: 20px;
   width: 90%;
   max-width: 500px;
@@ -50,36 +49,37 @@ body {
 /* Başlık */
 .game-title {
   font-size: 2rem;
-  color: #ff6f61;
+  color: #ff69b4; /* Pembe */
   margin-bottom: 20px;
 }
 
 /* Butonlar */
 button {
   font-size: 1rem;
-  padding: 10px 20px;
+  padding: 20px 40px;
   margin: 10px 5px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-color: #ff69b4; /* Pembe */
+  color: #fff; /* Beyaz */
 }
 
 button:hover {
-  background-color: #ff6f61;
-  color: #fff;
+  background-color: #e0569e; /* Daha koyu pembe */
 }
 
 .new-game-button {
-  background-color: #ffcccb;
+  background-color: #ff69b4; /* Pembe */
 }
 
 .roll-button {
-  background-color: #add8e6;
+  background-color: #ff69b4; /* Pembe */
 }
 
 .hold-button {
-  background-color: #90ee90;
+  background-color: #ff69b4; /* Pembe */
 }
 
 /* Oyuncu bölümleri */
@@ -87,101 +87,14 @@ button:hover {
 .second-player-container {
   margin: 20px 0;
   padding: 15px;
-  border: 2px solid #ddd;
+  border: 2px solid #ddd; /* Açık gri */
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #fff; /* Beyaz */
 }
 
 .playing {
-  background-color: #ffebcd;
-  border-color: #ff6f61;
-}
-
-.player-name {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.first-player-total-score,
-.second-player-total-score,
-.first-player-current
-
-/* Genel ayarlar */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.container {
-  text-align: center;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  width: 90%;
-  max-width: 500px;
-}
-
-/* Başlık */
-.game-title {
-  font-size: 2rem;
-  color: #ff6f61;
-  margin-bottom: 20px;
-}
-
-/* Butonlar */
-button {
-  font-size: 1rem;
-  padding: 10px 20px;
-  margin: 10px 5px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #ff6f61;
-  color: #fff;
-}
-
-.new-game-button {
-  background-color: #ffcccb;
-}
-
-.roll-button {
-  background-color: #add8e6;
-}
-
-.hold-button {
-  background-color: #90ee90;
-}
-
-/* Oyuncu bölümleri */
-.first-player-container,
-.second-player-container {
-  margin: 20px 0;
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-}
-
-.playing {
-  background-color: #ffebcd;
-  border-color: #ff6f61;
+  background-color: #ffe4e1; /* Açık pembe */
+  border-color: #ff69b4; /* Pembe */
 }
 
 .player-name {
@@ -194,7 +107,7 @@ button:hover {
 .first-player-current-score,
 .second-player-current-score {
   font-size: 1.2rem;
-  color: #555;
+  color: #555; /* Orta gri */
   margin: 5px 0;
 }
 
@@ -205,11 +118,15 @@ button:hover {
 
 .dice-result {
   font-weight: bold;
-  color: #ff6f61;
+  color: #ff69b4; /* Pembe */
 }
 
 .winner-text {
   font-size: 1.5rem;
-  color: #28a745;
+  color: #ff69b4; /* Pembe */
   margin-top: 20px;
+}
+
+.hidden {
+  display: none;
 }

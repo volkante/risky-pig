@@ -3,7 +3,7 @@
 // Select html elements and assign them to variables
 const firstPlayerSection = document.querySelector(".first-player-container");
 const secondPlayerSection = document.querySelector(".second-player-container");
-const startButton = document.querySelector(".start-button");
+const newGameButton = document.querySelector(".new-game-button");
 const firstPlayerTotalScoreSpan = document.querySelector(
   ".first-player-total-score span"
 );
@@ -156,7 +156,7 @@ const holdScore = () => {
 };
 
 const finishGame = (totalScore) => {
-  if (totalScore >= 10) {
+  if (totalScore >= 20) {
     disableElement(rollButton);
     disableElement(holdButton);
     // if the winner is firstplayer
@@ -176,6 +176,6 @@ const finishGame = (totalScore) => {
 // Add event listener to rollButton for dice rolling
 rollButton.addEventListener("click", rollDice);
 // Add event listener to new game button for resetting dice and scores
-startButton.addEventListener("click", resetGame);
+newGameButton.addEventListener("click", resetGame);
 // Add event listener to hold button to add current scores to playing player when clicked "hold"
 holdButton.addEventListener("click", holdScore);

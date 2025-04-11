@@ -115,6 +115,12 @@ button:hover {
   color: #ff69b4; /* Pembe */
 }
 
+.dice-pic {
+  width: 40px;
+  height: 40px;
+  border: 1px gray solid;
+}
+
 .winner-text {
   font-size: 1.5rem;
   color: #ff69b4; /* Pembe */

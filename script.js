@@ -21,6 +21,7 @@ const holdButton = document.querySelector(".hold-button");
 const diceResultSpan = document.querySelector(".dice-result");
 const winnerTextParagraph = document.querySelector(".winner-text");
 const winnerTextSpan = document.querySelector(".winner-text span");
+const dicePicImg = document.querySelector(".dice-pic");
 
 // Initialize variables to store dice values
 let currentDice = 0;
@@ -124,6 +125,9 @@ const resetGame = () => {
 const rollDice = () => {
   // Assign a random number between 1 - 6 to currentDice
   currentDice = generateRandomNumber();
+  // Show the dice result as picture
+  dicePicImg.src = `./assets/dice-${currentDice}.png`;
+  dicePicImg.classList.remove("hidden");
   // Update scores according to the player's turn and change turn when dice gets 1
   updateCurrentScores();
   // Display current dice result and scores

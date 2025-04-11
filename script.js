@@ -48,7 +48,7 @@ const enableElement = (element) => {
 
 // Generate a random number between 1 and 6
 const generateRandomNumber = () => {
-  return Math.ceil(Math.random() * 6);
+  return Math.trunc(Math.random() * 6) + 1;
 };
 
 // Reset turn by giving turn to first player
@@ -75,7 +75,7 @@ const updateCurrentScores = () => {
   if (firstPlayerSection.classList.contains("playing")) {
     // If first player is playing
     firstPlayerCurrentScore += currentDice;
-    // Update current Score of first player if the current dice is 1 and change turn.
+    // If the current dice is 1, set the current score of first player to 0 and change turn.
     if (currentDice == 1) {
       firstPlayerCurrentScore = 0;
       changeTurn();
@@ -83,7 +83,7 @@ const updateCurrentScores = () => {
   } else {
     // If second player is playing
     secondPlayerCurrentScore += currentDice;
-    // Update current Score of second player if the current dice is 1 and change turn.
+    // If the current dice is 1, set the current score of second player to 0 and change turn.
     if (currentDice == 1) {
       secondPlayerCurrentScore = 0;
       changeTurn();
@@ -156,7 +156,7 @@ const holdScore = () => {
 };
 
 const finishGame = (totalScore) => {
-  if (totalScore >= 20) {
+  if (totalScore >= 30) {
     disableElement(rollButton);
     disableElement(holdButton);
     // if the winner is firstplayer

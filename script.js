@@ -1,4 +1,4 @@
-"use Strict";
+"use strict";
 
 // Select html elements and assign them to variables
 const firstPlayerSection = document.querySelector(".first-player-container");
@@ -120,7 +120,7 @@ const resetGame = () => {
   }
 };
 
-// Roll dice to start the game
+// create a random num 1-6; update current player's score; display it
 const rollDice = () => {
   // Assign a random number between 1 - 6 to currentDice
   currentDice = generateRandomNumber();

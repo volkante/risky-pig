@@ -116,9 +116,14 @@ button:hover {
 }
 
 .dice-pic {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
   border: 1px gray solid;
+  border-radius: 10px;
 }
 
 .winner-text {

@@ -60,15 +60,10 @@ const resetTurn = () => {
   }
 };
 
-// Change turn by adding or removing "playing" class
+// Change turn by adding or removing "playing" class (toggle class)
 const changeTurn = () => {
-  if (firstPlayerSection.classList.contains("playing")) {
-    firstPlayerSection.classList.remove("playing");
-    secondPlayerSection.classList.add("playing");
-  } else {
-    secondPlayerSection.classList.remove("playing");
-    firstPlayerSection.classList.add("playing");
-  }
+  firstPlayerSection.classList.toggle("playing");
+  secondPlayerSection.classList.toggle("playing");
 };
 
 // Add current dice value to currently playing player's current score unless dice is 1
@@ -112,7 +107,8 @@ const resetGame = () => {
   // If the dice is rolled(if the game has been played), reset scores to 0 and display it and reset turn.
   if (currentDice) {
     resetScores();
-    displayText(diceResultSpan, currentDice);
+    dicePicImg.classList.add("hidden");
+    //displayText(diceResultSpan, currentDice);
     displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
     displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
     displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
@@ -131,7 +127,7 @@ const rollDice = () => {
   // Update scores according to the player's turn and change turn when dice gets 1
   updateCurrentScores();
   // Display current dice result and scores
-  displayText(diceResultSpan, currentDice);
+  //displayText(diceResultSpan, currentDice);
   displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
   displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
 };

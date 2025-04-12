@@ -18,7 +18,6 @@ const secondPlayerCurrentScoreSpan = document.querySelector(
 );
 const rollButton = document.querySelector(".roll-button");
 const holdButton = document.querySelector(".hold-button");
-const diceResultSpan = document.querySelector(".dice-result");
 const winnerTextParagraph = document.querySelector(".winner-text");
 const winnerTextSpan = document.querySelector(".winner-text span");
 const dicePicImg = document.querySelector(".dice-pic");
@@ -29,6 +28,7 @@ let firstPlayerCurrentScore = 0;
 let secondPlayerCurrentScore = 0;
 let firstPlayerTotalScore = 0;
 let secondPlayerTotalScore = 0;
+let activePlayer = 1;
 
 ////////// Define functions /////////
 
@@ -54,30 +54,32 @@ const generateRandomNumber = () => {
 
 // Reset turn by giving turn to first player
 const resetTurn = () => {
-  if (secondPlayerSection.classList.contains("playing")) {
+  if (activePlayer === 2) {
     secondPlayerSection.classList.remove("playing");
     firstPlayerSection.classList.add("playing");
+    activePlayer = 1;
   }
 };
 
-// Change turn by adding or removing "playing" class (toggle class)
+// Change turn by adding or removing "playing" class (toggle class) and changing active Player
 const changeTurn = () => {
   firstPlayerSection.classList.toggle("playing");
   secondPlayerSection.classList.toggle("playing");
+  activePlayer = activePlayer === 1 ? 2 : 1;
 };
 
 // Add current dice value to currently playing player's current score unless dice is 1
 const updateCurrentScores = () => {
-  if (firstPlayerSection.classList.contains("playing")) {
-    // If first player is playing
+  // If first player is playing
+  if (activePlayer == 1) {
     firstPlayerCurrentScore += currentDice;
     // If the current dice is 1, set the current score of first player to 0 and change turn.
     if (currentDice == 1) {
       firstPlayerCurrentScore = 0;
       changeTurn();
     }
-  } else {
     // If second player is playing
+  } else {
     secondPlayerCurrentScore += currentDice;
     // If the current dice is 1, set the current score of second player to 0 and change turn.
     if (currentDice == 1) {
@@ -135,7 +137,7 @@ const rollDice = () => {
 // Add current score to total score according to playing player
 const holdScore = () => {
   // If first player is playing
-  if (firstPlayerSection.classList.contains("playing")) {
+  if (activePlayer === 1) {
     firstPlayerTotalScore += firstPlayerCurrentScore;
     firstPlayerCurrentScore = 0;
     displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
@@ -143,8 +145,8 @@ const holdScore = () => {
     // finish game and display winner if totalscore is bigger than 20
     finishGame(firstPlayerTotalScore);
     changeTurn();
-  } else {
     // If second player is playing
+  } else {
     secondPlayerTotalScore += secondPlayerCurrentScore;
     secondPlayerCurrentScore = 0;
     displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
@@ -163,8 +165,8 @@ const finishGame = (totalScore) => {
     if (totalScore == firstPlayerTotalScore) {
       displayText(winnerTextSpan, "PLAYER 1");
       winnerTextParagraph.classList.remove("hidden");
-    } else {
       // if the winner is secondplayer
+    } else {
       displayText(winnerTextSpan, "PLAYER 2");
       winnerTextParagraph.classList.remove("hidden");
     }

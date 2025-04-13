@@ -37,14 +37,9 @@ const displayText = (element, content) => {
   element.textContent = content;
 };
 
-// Disable element
-const disableElement = (element) => {
-  element.disabled = true;
-};
-
-// Enable element
-const enableElement = (element) => {
-  element.disabled = false;
+// Enable button if disabled and vice versa
+const toggleElement = (element) => {
+  element.disabled = !element.disabled;
 };
 
 // Generate a random number between 1 and 6
@@ -103,8 +98,8 @@ const resetGame = () => {
   // If winner text is not hidden because of an already finished game, hide it and enable buttons
   if (!winnerTextParagraph.classList.contains("hidden")) {
     winnerTextParagraph.classList.add("hidden");
-    enableElement(rollButton);
-    enableElement(holdButton);
+    toggleElement(rollButton);
+    toggleElement(holdButton);
   }
   // If the dice is rolled(if the game has been played), reset scores to 0 and display it and reset turn.
   if (currentDice) {
@@ -159,8 +154,8 @@ const holdScore = () => {
 
 const finishGame = (totalScore) => {
   if (totalScore >= 30) {
-    disableElement(rollButton);
-    disableElement(holdButton);
+    toggleElement(rollButton);
+    toggleElement(holdButton);
     // if the winner is firstplayer
     if (totalScore == firstPlayerTotalScore) {
       displayText(winnerTextSpan, "PLAYER 1");

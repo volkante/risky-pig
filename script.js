@@ -1,22 +1,20 @@
 "use strict";
 
-//TODO: display score'lar iki yerde geçiyor 4'lü tek bir fonksiyonda toplanabilir.
-
 // Select html elements and assign them to variables
 const player0Section = document.querySelector(".first-player-container");
 const player1Section = document.querySelector(".second-player-container");
 const newGameButton = document.querySelector(".new-game-button");
 const player0TotalScoreSpan = document.querySelector(
-  ".first-player-total-score span"
+  ".player-0-total-score span"
 );
 const player0CurrentScoreSpan = document.querySelector(
-  ".first-player-current-score span"
+  ".player-0-current-score span"
 );
 const player1TotalScoreSpan = document.querySelector(
-  ".second-player-total-score span"
+  ".player-1-total-score span"
 );
 const player1CurrentScoreSpan = document.querySelector(
-  ".second-player-current-score span"
+  ".player-1-current-score span"
 );
 const rollButton = document.querySelector(".roll-button");
 const holdButton = document.querySelector(".hold-button");
@@ -90,7 +88,7 @@ const resetGame = () => {
     toggleElement(rollButton);
     toggleElement(holdButton);
   }
-  // If the dice is rolled(if the game has been played), reset scores to 0 and display it and reset turn.
+  // If the dice is rolled(if the game has started), reset scores to 0 and display it and reset turn.
   if (currentDice) {
     resetScores();
     dicePicImg.classList.add("hidden");
@@ -112,7 +110,6 @@ const rollDice = () => {
   // Update scores according to the player's turn and change turn when dice gets 1
   updateCurrentScores();
   // Display current dice result and scores
-  //displayText(diceResultSpan, currentDice);
   displayText(player0CurrentScoreSpan, currentScores[0]);
   displayText(player1CurrentScoreSpan, currentScores[1]);
 };
@@ -130,15 +127,13 @@ const holdScore = () => {
   changeTurn();
 };
 
-// Check if any player has reached to 30 total points. If that's the case, disable buttons and show winner
+// Check if active player has reached to 30 total points. If that's the case, disable buttons and show winner
 const finishGame = (totalScoresArr) => {
-  for (let i = 0; i < totalScoresArr.length; i++) {
-    if (totalScores[i] >= 30) {
-      toggleElement(rollButton);
-      toggleElement(holdButton);
-      displayText(winnerTextSpan, `Player ${i + 1}`);
-      winnerTextParagraph.classList.remove("hidden");
-    }
+  if (totalScoresArr[activePlayer] >= 30) {
+    toggleElement(rollButton);
+    toggleElement(holdButton);
+    displayText(winnerTextSpan, `Player ${activePlayer + 1}`);
+    winnerTextParagraph.classList.remove("hidden");
   }
 };
 

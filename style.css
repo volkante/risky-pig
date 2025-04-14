@@ -96,10 +96,10 @@ button:hover {
   margin-bottom: 10px;
 }
 
-.first-player-total-score,
-.second-player-total-score,
-.first-player-current-score,
-.second-player-current-score {
+.player-0-total-score,
+.player-1-total-score,
+.player-0-current-score,
+.player-1-current-score {
   font-size: 1.2rem;
   color: #555; /* Orta gri */
   margin: 5px 0;

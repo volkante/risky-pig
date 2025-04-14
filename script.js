@@ -132,16 +132,13 @@ const holdScore = () => {
 
 // Check if any player has reached to 30 total points. If that's the case, disable buttons and show winner
 const finishGame = (totalScoresArr) => {
-  if (totalScores[0] >= 30) {
-    toggleElement(rollButton);
-    toggleElement(holdButton);
-    displayText(winnerTextSpan, "PLAYER 1");
-    winnerTextParagraph.classList.remove("hidden");
-  } else if (totalScores[1] >= 30) {
-    toggleElement(rollButton);
-    toggleElement(holdButton);
-    displayText(winnerTextSpan, "PLAYER 2");
-    winnerTextParagraph.classList.remove("hidden");
+  for (let i = 0; i < totalScoresArr.length; i++) {
+    if (totalScores[i] >= 30) {
+      toggleElement(rollButton);
+      toggleElement(holdButton);
+      displayText(winnerTextSpan, `Player ${i + 1}`);
+      winnerTextParagraph.classList.remove("hidden");
+    }
   }
 };
 

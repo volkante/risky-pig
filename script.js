@@ -1,5 +1,8 @@
 "use strict";
 
+//TODO-1 Scorespanlari gösterme işini dinamikleştirmek
+//TODO-2 Playing=true diye boolean bir value tutmak,bitince false yapmak. buttonlarla oynmaya gerek kalmaması. Böylece butonları disable enable etme kodlarını silebilmek?
+
 // Select html elements and assign them to variables
 const player0Section = document.querySelector(".first-player-container");
 const player1Section = document.querySelector(".second-player-container");
@@ -31,11 +34,6 @@ const currentScores = [0, 0];
 let activePlayer = 0;
 
 ////////// Define functions /////////
-
-// Display text content of an element
-const displayText = (element, content) => {
-  element.textContent = content;
-};
 
 // Enable button if disabled and vice versa
 const toggleElement = (element) => {
@@ -92,10 +90,10 @@ const resetGame = () => {
   if (currentDice) {
     resetScores();
     dicePicImg.classList.add("hidden");
-    displayText(player0CurrentScoreSpan, currentScores[0]);
-    displayText(player0TotalScoreSpan, totalScores[0]);
-    displayText(player1CurrentScoreSpan, currentScores[1]);
-    displayText(player1TotalScoreSpan, currentScores[1]);
+    player0CurrentScoreSpan.textContent = currentScores[0];
+    player0TotalScoreSpan.textContent = totalScores[0];
+    player1CurrentScoreSpan.textContent = currentScores[1];
+    player1TotalScoreSpan.textContent = totalScores[1];
     resetTurn();
   }
 };
@@ -110,18 +108,18 @@ const rollDice = () => {
   // Update scores according to the player's turn and change turn when dice gets 1
   updateCurrentScores();
   // Display current dice result and scores
-  displayText(player0CurrentScoreSpan, currentScores[0]);
-  displayText(player1CurrentScoreSpan, currentScores[1]);
+  player0CurrentScoreSpan.textContent = currentScores[0];
+  player1CurrentScoreSpan.textContent = currentScores[1];
 };
 
 // Add current score to total score according to playing player
 const holdScore = () => {
   totalScores[activePlayer] += currentScores[activePlayer];
   currentScores[activePlayer] = 0;
-  displayText(player0CurrentScoreSpan, currentScores[0]);
-  displayText(player0TotalScoreSpan, totalScores[0]);
-  displayText(player1CurrentScoreSpan, currentScores[1]);
-  displayText(player1TotalScoreSpan, totalScores[1]);
+  player0CurrentScoreSpan.textContent = currentScores[0];
+  player0TotalScoreSpan.textContent = totalScores[0];
+  player1CurrentScoreSpan.textContent = currentScores[1];
+  player1TotalScoreSpan.textContent = totalScores[1];
   // Finish game and display winner if totalscore is bigger than 30
   finishGame(totalScores);
   changeTurn();
@@ -132,7 +130,7 @@ const finishGame = (totalScoresArr) => {
   if (totalScoresArr[activePlayer] >= 30) {
     toggleElement(rollButton);
     toggleElement(holdButton);
-    displayText(winnerTextSpan, `Player ${activePlayer + 1}`);
+    winnerTextSpan.textContent = `Player ${activePlayer + 1}`;
     winnerTextParagraph.classList.remove("hidden");
   }
 };

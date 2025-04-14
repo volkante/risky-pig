@@ -1,19 +1,21 @@
 "use strict";
 
+//TODO: display score'lar iki yerde geçiyor 4'lü tek bir fonksiyonda toplanabilir.
+
 // Select html elements and assign them to variables
-const firstPlayerSection = document.querySelector(".first-player-container");
-const secondPlayerSection = document.querySelector(".second-player-container");
+const player0Section = document.querySelector(".first-player-container");
+const player1Section = document.querySelector(".second-player-container");
 const newGameButton = document.querySelector(".new-game-button");
-const firstPlayerTotalScoreSpan = document.querySelector(
+const player0TotalScoreSpan = document.querySelector(
   ".first-player-total-score span"
 );
-const firstPlayerCurrentScoreSpan = document.querySelector(
+const player0CurrentScoreSpan = document.querySelector(
   ".first-player-current-score span"
 );
-const secondPlayerTotalScoreSpan = document.querySelector(
+const player1TotalScoreSpan = document.querySelector(
   ".second-player-total-score span"
 );
-const secondPlayerCurrentScoreSpan = document.querySelector(
+const player1CurrentScoreSpan = document.querySelector(
   ".second-player-current-score span"
 );
 const rollButton = document.querySelector(".roll-button");
@@ -24,11 +26,11 @@ const dicePicImg = document.querySelector(".dice-pic");
 
 // Initialize variables to store dice values
 let currentDice = 0;
-let firstPlayerCurrentScore = 0;
-let secondPlayerCurrentScore = 0;
-let firstPlayerTotalScore = 0;
-let secondPlayerTotalScore = 0;
-let activePlayer = 1;
+// Store scores in arrays by player index (player 1 index= 0; player 2 index = 1)
+const totalScores = [0, 0];
+const currentScores = [0, 0];
+// Assing active player to 0 if first player is playing, 1 if second is playing
+let activePlayer = 0;
 
 ////////// Define functions /////////
 
@@ -49,48 +51,35 @@ const generateRandomNumber = () => {
 
 // Reset turn by giving turn to first player
 const resetTurn = () => {
-  if (activePlayer === 2) {
-    secondPlayerSection.classList.remove("playing");
-    firstPlayerSection.classList.add("playing");
-    activePlayer = 1;
+  if (activePlayer === 1) {
+    player1Section.classList.remove("playing");
+    player0Section.classList.add("playing");
+    activePlayer = 0;
   }
 };
 
-// Change turn by adding or removing "playing" class (toggle class) and changing active Player
+// Change turn by adding or removing "playing" class (toggle) and changing active Player
 const changeTurn = () => {
-  firstPlayerSection.classList.toggle("playing");
-  secondPlayerSection.classList.toggle("playing");
-  activePlayer = activePlayer === 1 ? 2 : 1;
+  player0Section.classList.toggle("playing");
+  player1Section.classList.toggle("playing");
+  activePlayer = activePlayer === 0 ? 1 : 0;
 };
 
 // Add current dice value to currently playing player's current score unless dice is 1
+// If dice is 1, set current players score to 0 and change turn
 const updateCurrentScores = () => {
-  // If first player is playing
-  if (activePlayer == 1) {
-    firstPlayerCurrentScore += currentDice;
-    // If the current dice is 1, set the current score of first player to 0 and change turn.
-    if (currentDice == 1) {
-      firstPlayerCurrentScore = 0;
-      changeTurn();
-    }
-    // If second player is playing
-  } else {
-    secondPlayerCurrentScore += currentDice;
-    // If the current dice is 1, set the current score of second player to 0 and change turn.
-    if (currentDice == 1) {
-      secondPlayerCurrentScore = 0;
-      changeTurn();
-    }
+  currentScores[activePlayer] += currentDice;
+  if (currentDice == 1) {
+    currentScores[activePlayer] = 0;
+    changeTurn();
   }
 };
 
 // Reset all scores
 const resetScores = () => {
   currentDice = 0;
-  firstPlayerCurrentScore = 0;
-  secondPlayerCurrentScore = 0;
-  firstPlayerTotalScore = 0;
-  secondPlayerTotalScore = 0;
+  totalScores.forEach((item, index) => (totalScores[index] = 0));
+  currentScores.forEach((item, index) => (totalScores[index] = 0));
 };
 
 // Reset game
@@ -105,16 +94,15 @@ const resetGame = () => {
   if (currentDice) {
     resetScores();
     dicePicImg.classList.add("hidden");
-    //displayText(diceResultSpan, currentDice);
-    displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
-    displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
-    displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
-    displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
+    displayText(player0CurrentScoreSpan, currentScores[0]);
+    displayText(player0TotalScoreSpan, totalScores[0]);
+    displayText(player1CurrentScoreSpan, currentScores[1]);
+    displayText(player1TotalScoreSpan, currentScores[1]);
     resetTurn();
   }
 };
 
-// create a random num 1-6; update current player's score; display it
+// Create a random num 1-6; update current player's score; display it
 const rollDice = () => {
   // Assign a random number between 1 - 6 to currentDice
   currentDice = generateRandomNumber();
@@ -125,46 +113,35 @@ const rollDice = () => {
   updateCurrentScores();
   // Display current dice result and scores
   //displayText(diceResultSpan, currentDice);
-  displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
-  displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
+  displayText(player0CurrentScoreSpan, currentScores[0]);
+  displayText(player1CurrentScoreSpan, currentScores[1]);
 };
 
 // Add current score to total score according to playing player
 const holdScore = () => {
-  // If first player is playing
-  if (activePlayer === 1) {
-    firstPlayerTotalScore += firstPlayerCurrentScore;
-    firstPlayerCurrentScore = 0;
-    displayText(firstPlayerCurrentScoreSpan, firstPlayerCurrentScore);
-    displayText(firstPlayerTotalScoreSpan, firstPlayerTotalScore);
-    // finish game and display winner if totalscore is bigger than 20
-    finishGame(firstPlayerTotalScore);
-    changeTurn();
-    // If second player is playing
-  } else {
-    secondPlayerTotalScore += secondPlayerCurrentScore;
-    secondPlayerCurrentScore = 0;
-    displayText(secondPlayerCurrentScoreSpan, secondPlayerCurrentScore);
-    displayText(secondPlayerTotalScoreSpan, secondPlayerTotalScore);
-    // finish game and display winner if totalscore is bigger than 20
-    finishGame(secondPlayerTotalScore);
-    changeTurn();
-  }
+  totalScores[activePlayer] += currentScores[activePlayer];
+  currentScores[activePlayer] = 0;
+  displayText(player0CurrentScoreSpan, currentScores[0]);
+  displayText(player0TotalScoreSpan, totalScores[0]);
+  displayText(player1CurrentScoreSpan, currentScores[1]);
+  displayText(player1TotalScoreSpan, totalScores[1]);
+  // Finish game and display winner if totalscore is bigger than 30
+  finishGame(totalScores);
+  changeTurn();
 };
 
-const finishGame = (totalScore) => {
-  if (totalScore >= 30) {
+// Check if any player has reached to 30 total points. If that's the case, disable buttons and show winner
+const finishGame = (totalScoresArr) => {
+  if (totalScores[0] >= 30) {
     toggleElement(rollButton);
     toggleElement(holdButton);
-    // if the winner is firstplayer
-    if (totalScore == firstPlayerTotalScore) {
-      displayText(winnerTextSpan, "PLAYER 1");
-      winnerTextParagraph.classList.remove("hidden");
-      // if the winner is secondplayer
-    } else {
-      displayText(winnerTextSpan, "PLAYER 2");
-      winnerTextParagraph.classList.remove("hidden");
-    }
+    displayText(winnerTextSpan, "PLAYER 1");
+    winnerTextParagraph.classList.remove("hidden");
+  } else if (totalScores[1] >= 30) {
+    toggleElement(rollButton);
+    toggleElement(holdButton);
+    displayText(winnerTextSpan, "PLAYER 2");
+    winnerTextParagraph.classList.remove("hidden");
   }
 };
 

@@ -32,13 +32,10 @@ const totalScores = [0, 0];
 const currentScores = [0, 0];
 // Assing active player to 0 if first player is playing, 1 if second is playing
 let activePlayer = 0;
+// Store playing value as a boolean to watch the games status. Events on roll and hold button will initiate, only if playing is true.
+let playing = true;
 
 ////////// Define functions /////////
-
-// Enable button if disabled and vice versa
-const toggleElement = (element) => {
-  element.disabled = !element.disabled;
-};
 
 // Generate a random number between 1 and 6
 const generateRandomNumber = () => {
@@ -80,11 +77,10 @@ const resetScores = () => {
 
 // Reset game
 const resetGame = () => {
-  // If winner text is not hidden because of an already finished game, hide it and enable buttons
+  playing = true;
+  // If winner text is not hidden because of an already finished game, hide it
   if (!winnerTextParagraph.classList.contains("hidden")) {
     winnerTextParagraph.classList.add("hidden");
-    toggleElement(rollButton);
-    toggleElement(holdButton);
   }
   // If the dice is rolled(if the game has started), reset scores to 0 and display it and reset turn.
   if (currentDice) {
@@ -100,36 +96,39 @@ const resetGame = () => {
 
 // Create a random num 1-6; update current player's score; display it
 const rollDice = () => {
-  // Assign a random number between 1 - 6 to currentDice
-  currentDice = generateRandomNumber();
-  // Show the dice result as picture
-  dicePicImg.src = `./assets/dice-${currentDice}.png`;
-  dicePicImg.classList.remove("hidden");
-  // Update scores according to the player's turn and change turn when dice gets 1
-  updateCurrentScores();
-  // Display current dice result and scores
-  player0CurrentScoreSpan.textContent = currentScores[0];
-  player1CurrentScoreSpan.textContent = currentScores[1];
+  if (playing) {
+    // Assign a random number between 1 - 6 to currentDice
+    currentDice = generateRandomNumber();
+    // Show the dice result as picture
+    dicePicImg.src = `./assets/dice-${currentDice}.png`;
+    dicePicImg.classList.remove("hidden");
+    // Update scores according to the player's turn and change turn when dice gets 1
+    updateCurrentScores();
+    // Display current dice result and scores
+    player0CurrentScoreSpan.textContent = currentScores[0];
+    player1CurrentScoreSpan.textContent = currentScores[1];
+  }
 };
 
 // Add current score to total score according to playing player
 const holdScore = () => {
-  totalScores[activePlayer] += currentScores[activePlayer];
-  currentScores[activePlayer] = 0;
-  player0CurrentScoreSpan.textContent = currentScores[0];
-  player0TotalScoreSpan.textContent = totalScores[0];
-  player1CurrentScoreSpan.textContent = currentScores[1];
-  player1TotalScoreSpan.textContent = totalScores[1];
-  // Finish game and display winner if totalscore is bigger than 30
-  finishGame(totalScores);
-  changeTurn();
+  if (playing) {
+    totalScores[activePlayer] += currentScores[activePlayer];
+    currentScores[activePlayer] = 0;
+    player0CurrentScoreSpan.textContent = currentScores[0];
+    player0TotalScoreSpan.textContent = totalScores[0];
+    player1CurrentScoreSpan.textContent = currentScores[1];
+    player1TotalScoreSpan.textContent = totalScores[1];
+    // Finish game and display winner if totalscore is bigger than 30
+    finishGame(totalScores);
+    changeTurn();
+  }
 };
 
-// Check if active player has reached to 30 total points. If that's the case, disable buttons and show winner
+// Check if active player has reached to 30 total points. If that's the case, set playing variable to false and display the winner.
 const finishGame = (totalScoresArr) => {
   if (totalScoresArr[activePlayer] >= 30) {
-    toggleElement(rollButton);
-    toggleElement(holdButton);
+    playing = false;
     winnerTextSpan.textContent = `Player ${activePlayer + 1}`;
     winnerTextParagraph.classList.remove("hidden");
   }

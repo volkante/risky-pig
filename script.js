@@ -1,29 +1,6 @@
 "use strict";
 
-//TODO-1 Scorespanlari gösterme işini dinamikleştirmek
-//TODO-2 Playing=true diye boolean bir value tutmak,bitince false yapmak. buttonlarla oynmaya gerek kalmaması. Böylece butonları disable enable etme kodlarını silebilmek?
-
-// Select html elements and assign them to variables
-const player0Section = document.querySelector(".first-player-container");
-const player1Section = document.querySelector(".second-player-container");
-const newGameButton = document.querySelector(".new-game-button");
-const player0TotalScoreSpan = document.querySelector(
-  ".player-0-total-score span"
-);
-const player0CurrentScoreSpan = document.querySelector(
-  ".player-0-current-score span"
-);
-const player1TotalScoreSpan = document.querySelector(
-  ".player-1-total-score span"
-);
-const player1CurrentScoreSpan = document.querySelector(
-  ".player-1-current-score span"
-);
-const rollButton = document.querySelector(".roll-button");
-const holdButton = document.querySelector(".hold-button");
-const winnerTextParagraph = document.querySelector(".winner-text");
-const winnerTextSpan = document.querySelector(".winner-text span");
-const dicePicImg = document.querySelector(".dice-pic");
+//TODO-1 Playin class'ının winner'da kalması ve değişmesi (Renk?)
 
 // Initialize variables to store dice values
 let currentDice = 0;
@@ -34,6 +11,33 @@ const currentScores = [0, 0];
 let activePlayer = 0;
 // Store playing value as a boolean to watch the games status. Events on roll and hold button will initiate, only if playing is true.
 let playing = true;
+
+// Select html elements and assign them to variables
+const player0Section = document.querySelector(".first-player-container");
+const player1Section = document.querySelector(".second-player-container");
+const newGameButton = document.querySelector(".new-game-button");
+
+const player0CurrentScoreSpan = document.querySelector(
+  `.player-0-current-score span`
+);
+
+const player1CurrentScoreSpan = document.querySelector(
+  `.player-1-current-score span`
+);
+
+const player0TotalScoreSpan = document.querySelector(
+  `.player-0-total-score span`
+);
+
+const player1TotalScoreSpan = document.querySelector(
+  `.player-1-total-score span`
+);
+
+const rollButton = document.querySelector(".roll-button");
+const holdButton = document.querySelector(".hold-button");
+const winnerTextParagraph = document.querySelector(".winner-text");
+const winnerTextSpan = document.querySelector(".winner-text span");
+const dicePicImg = document.querySelector(".dice-pic");
 
 ////////// Define functions /////////
 
@@ -62,6 +66,7 @@ const changeTurn = () => {
 // If dice is 1, set current players score to 0 and change turn
 const updateCurrentScores = () => {
   currentScores[activePlayer] += currentDice;
+  console.log(currentScores);
   if (currentDice == 1) {
     currentScores[activePlayer] = 0;
     changeTurn();
@@ -85,12 +90,12 @@ const resetGame = () => {
   // If the dice is rolled(if the game has started), reset scores to 0 and display it and reset turn.
   if (currentDice) {
     resetScores();
+    resetTurn();
     dicePicImg.classList.add("hidden");
     player0CurrentScoreSpan.textContent = currentScores[0];
-    player0TotalScoreSpan.textContent = totalScores[0];
     player1CurrentScoreSpan.textContent = currentScores[1];
+    player0TotalScoreSpan.textContent = totalScores[0];
     player1TotalScoreSpan.textContent = totalScores[1];
-    resetTurn();
   }
 };
 
@@ -104,7 +109,7 @@ const rollDice = () => {
     dicePicImg.classList.remove("hidden");
     // Update scores according to the player's turn and change turn when dice gets 1
     updateCurrentScores();
-    // Display current dice result and scores
+    // Display current scores
     player0CurrentScoreSpan.textContent = currentScores[0];
     player1CurrentScoreSpan.textContent = currentScores[1];
   }
@@ -116,8 +121,8 @@ const holdScore = () => {
     totalScores[activePlayer] += currentScores[activePlayer];
     currentScores[activePlayer] = 0;
     player0CurrentScoreSpan.textContent = currentScores[0];
-    player0TotalScoreSpan.textContent = totalScores[0];
     player1CurrentScoreSpan.textContent = currentScores[1];
+    player0TotalScoreSpan.textContent = totalScores[0];
     player1TotalScoreSpan.textContent = totalScores[1];
     // Finish game and display winner if totalscore is bigger than 30
     finishGame(totalScores);
